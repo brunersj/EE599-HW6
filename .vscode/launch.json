@@ -28,7 +28,7 @@
       // *** You need to change this part for your own system to work ***
       // Set sourceMap from output of (readlink -n bazel-cpp-template) to ${workspaceFolder}
       "sourceMap": {
-        "/private/var/tmp/_bazel_ari/8b6cf68db0ea2d6ea3f9c3ed5620d651/execroot/__main__": "${workspaceFolder}/"
+        "/private/var/tmp/_bazel_Sam/07edf325a9e93151ffc3dda473d6f00b/execroot/__main__": "${workspaceFolder}/"
       }
     },
   ]
