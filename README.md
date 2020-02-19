@@ -25,3 +25,6 @@ You can run unit tests using [`blaze`](installing-bazel):
 bazel test tests:tests
 ```
 
+### Credits
+
+Implementation of Heap / Tree methods inspired by Prof Rob Edwards SDSU. https://www.youtube.com/channel/UC6Aa5t0vHN8uj_BCbgrRZcQ
