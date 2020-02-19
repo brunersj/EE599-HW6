@@ -233,7 +233,7 @@ TEST(TopTest, HandlesEmptyHeap) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(PushTest, HandlesPushLargest) {
+TEST(HeapPushTest, HandlesPushLargest) {
   MaxHeap maxheap;
   maxheap.push(4);
   maxheap.push(2);
@@ -243,7 +243,7 @@ TEST(PushTest, HandlesPushLargest) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(PushTest, HandlesPushSmallest) {
+TEST(HeapPushTest, HandlesPushSmallest) {
   MaxHeap maxheap;
   maxheap.push(4);
   maxheap.push(2);
@@ -254,7 +254,7 @@ TEST(PushTest, HandlesPushSmallest) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(PopTest, HandlesPop) {
+TEST(HeapPopTest, HandlesPop) {
   MaxHeap maxheap;
   maxheap.push(4);
   maxheap.push(2);
@@ -265,7 +265,7 @@ TEST(PopTest, HandlesPop) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST(PushTest, HandlesPopEmpty) {
+TEST(HeapPopTest, HandlesPopEmpty) {
   MaxHeap maxheap;
   maxheap.pop();
   int actual = INT_MAX;
@@ -273,8 +273,89 @@ TEST(PushTest, HandlesPopEmpty) {
   EXPECT_EQ(expected, actual);
 }
 
-// Question 3
+// Question 3 - BST
 
+TEST(BSTPushTest, HandlesPushSmallest) {
+  BST bst;
+  std::vector<int> output;
+  bst.push(4);
+  bst.push(2);
+  bst.push(7);
+  bst.push(1);
+  bst.PreOrder(output);
+  int actual = 1;
+  int expected = output[output.size()-2];
+
+  EXPECT_EQ(expected, actual);
+}
+
+
+TEST(BSTFindTest, HandlesValidFind) {
+  BST bst;
+  bst.push(4);
+  bst.push(2);
+  bst.push(7);
+  bst.push(1);
+  bool actual = 1;
+  bool expected = bst.find(7);
+
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(BSTFindTest, HandlesInvalidFind) {
+  BST bst;
+  bst.push(4);
+  bst.push(2);
+  bst.push(7);
+  bst.push(1);
+  bool actual = 0;
+  bool expected = bst.find(8);
+
+  EXPECT_EQ(expected, actual);
+}
+
+
+TEST(BSTEraseTest, HandlesEraseLeafNode) {
+  BST bst;
+  bst.push(8);
+  bst.push(3);
+  bst.push(10);
+  bst.push(2);
+  bst.push(5);
+  bst.push(14);
+  bst.push(4);
+  bst.push(7);
+  bst.push(12);
+
+  bst.erase(12);
+  
+  std::vector<int> actual = {8, 3, 2, 5, 4, 7, 10, 14};
+  std::vector<int> expected;
+  bst.PreOrder(expected);
+
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(BSTEraseTest, HandlesEraseNodeWith1Child) {
+  BST bst;
+  bst.push(8);
+  bst.push(3);
+  bst.push(10);
+  bst.push(2);
+  bst.push(5);
+  bst.push(14);
+  bst.push(4);
+  bst.push(7);
+  bst.push(12);
+
+  bst.erase(14);
+  
+  std::vector<int> actual = {8, 3, 2, 5, 4, 7, 10, 12};
+  std::vector<int> expected;
+  bst.PreOrder(expected);
+
+  EXPECT_EQ(expected, actual);
+}
 
 // Question 4 - BFS
 

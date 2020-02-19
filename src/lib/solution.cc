@@ -241,8 +241,73 @@ bool BST::find_helper(TreeNode* parent, int key){
   }
 }
 
-bool erase_helper(TreeNode* parent, int key){
+//O(1)
+bool BST::erase(int key){
+  return erase_helper(root_, key, nullptr);
+}
 
+//O(logn)
+bool BST::erase_helper(TreeNode* parent, int key, TreeNode* prev){
+  if (parent == nullptr) {
+  return false;
+  }
+  if (parent->val == key) {
+    // erasing node with two children
+    if((parent->left != nullptr && parent->right != nullptr)){ 
+      // swap with in order predessor
+
+      delete root_;
+      root_ = parent;
+    }
+    // erasing leaf node
+    else if(parent->left == nullptr && parent->right == nullptr) {
+      if(prev->left == parent){
+        delete prev->left;
+        prev->left = nullptr;
+        // delete parent;
+        // parent = nullptr;
+      }
+      else if(prev->right == parent){
+        delete prev->right;
+        prev->right = nullptr;
+        // delete parent;
+        // parent = nullptr;
+      }
+    }
+    // parent with one left child - set parent = child
+    else if (parent->left != nullptr && parent->right == nullptr){
+      if(prev->left == parent){
+        prev->left = parent->left;
+        delete parent;
+        parent = nullptr;
+      }
+      else if(prev->right == parent){
+        prev->right = parent->left;
+        delete parent;
+        parent = nullptr;
+      }
+    }
+    // parent with one right child - set parent = child
+    else if (parent->left == nullptr && parent->right != nullptr){
+      if(prev->left == parent){
+        prev->left = parent->right;
+        delete parent;
+        parent = nullptr;
+      }
+      else if(prev->right == parent){
+        prev->right = parent->right;
+        delete parent;
+        parent = nullptr;
+      }
+    }
+    return true;
+  }
+  if (key < parent->val) {
+    return erase_helper(parent->left, key, parent);  
+  } 
+  else {
+    return erase_helper(parent->right, key, parent);
+  }
 }
 
 // O(n)

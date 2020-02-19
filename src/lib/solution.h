@@ -78,7 +78,7 @@ void PreOrder_Helper(TreeNode* a, std::vector<int>& result);
 void PreOrderDelete(TreeNode* a);
 void push_helper(TreeNode* parent, int key);
 bool find_helper(TreeNode* parent, int key);
-bool erase_helper(TreeNode* parent, int key);
+bool erase_helper(TreeNode* parent, int key, TreeNode* prev);
 TreeNode *root_;
 };
 

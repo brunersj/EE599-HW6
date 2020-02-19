@@ -25,16 +25,19 @@ int main() {
   std::vector<int> input = {1,2,3,4,5,6,7,8,9};
   std::vector<int> output = s.FilterOdd(input);
   cout << "Question 1: " << endl;
+  cout << "Input: ";
   for (auto i : input){
     cout << i << " ";
   }
   cout << endl;
+  cout << "Filter out odd: ";
   for (auto i : output){
     cout << i << " ";
   }
 
   output = s.MapISq(input);
   cout << endl;
+  cout << "Output = input^2: ";
   for (auto i : output){
     cout << i << " ";
   }
@@ -44,6 +47,7 @@ int sum = s.AccumulateVect(input);
 cout << "Accumulate: " << sum << endl;
 
 // Question 2
+cout << "Question 2:" << endl;
 
 MaxHeap maxHeap;
 
@@ -67,7 +71,7 @@ maxHeap.push(28);
 
 maxHeap.pop();
 
-cout << "Question 2:" << endl;
+
 
 
 
@@ -77,6 +81,7 @@ cout << "Question 3:" << endl;
 input = {8,3,10,2,5,14,4,7,12};
 
 //BST tree(input);
+std::vector<int> outputq3, outputq3_2, erase_test;
 BST tree1, tree2, tree3;
 BST tree4(input);
 tree1.push(8);
@@ -89,6 +94,14 @@ tree1.push(4);
 tree1.push(7);
 tree1.push(12);
 
+tree1.erase(14);
+
+tree1.PreOrder(erase_test);
+for (auto &it : erase_test){
+  cout << it << " ";
+}
+cout << endl;
+
 tree2.push(60);
 tree2.push(20);
 tree2.push(80);
@@ -98,20 +111,20 @@ tree2.push(25);
 tree2.push(50);
 
 
-std::vector<int> outputq3, outputq3_2;
+
 // tree2.PreOrder(outputq3);
 tree4.BFS(outputq3_2);
 tree2.BFS(outputq3);
 
-for (auto &it : outputq3){
-  cout << it << " ";
-}
-cout << endl;
+// for (auto &it : outputq3){
+//   cout << it << " ";
+// }
+// cout << endl;
 
-for (auto &it : outputq3_2){
-  cout << it << " ";
-}
-cout << endl;
+// for (auto &it : outputq3_2){
+//   cout << it << " ";
+// }
+// cout << endl;
 
 // Question 4 - BFS
 std::vector<int> outputq4;
@@ -134,6 +147,7 @@ for (auto &it : outputq4){
 cout << endl;
 
 // Question 5:
+cout << "Question 5:\n";
 std::vector<int> inputq5 = {5, 9, 3, 1, 7};
 s.heap_sort(inputq5);
 for (auto &it : inputq5){
@@ -143,10 +157,15 @@ cout << endl;
 
 // Question 6: Find the k(th) largest element in an unsorted vector and return that value.
 // use max heap and traverse through tree k times
+cout << "Question 6:\n";
+ MaxHeap maxHeap6, maxHeap6p2;
   std::vector<int> inputq6 = {0,2,1,5,6,3};
   int k = 2;
-
-  MaxHeap maxHeap6, maxHeap6p2;
+  cout << "Input: ";
+  for (const auto &it : inputq6){
+    cout << it << " ";
+  }
+  cout << "\nK=2, Output: ";
 
   int outputq6 = maxHeap6.KthLargest(inputq6, k);
   cout << outputq6 << endl;
@@ -155,11 +174,13 @@ cout << endl;
   k = 3;
 
   outputq6 = maxHeap6p2.KthLargest(inputq6p2, k);
+  cout << "Input: ";
   for (const auto &it : inputq6p2){
     cout << it << " ";
   }
-  cout << endl;
+  cout << "\nK=3, Output: ";
   cout << outputq6 << endl;
+
   // _CrtDumpMemoryLeaks();
   return EXIT_SUCCESS;
 }
