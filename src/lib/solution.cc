@@ -1,173 +1,5 @@
 #include "solution.h"
 
-// O(n)
-std::vector<int> Solution::FilterOdd(const std::vector<int> &input){
-  std::vector<int> evenOnly (input.size());
-    // copy only even numbers
-  auto count_even = std::copy_if (input.begin(), input.end(), evenOnly.begin(), [](int i){return !(i%2);} );
-  evenOnly.resize(std::distance(evenOnly.begin(),count_even)); 
-return evenOnly;
-}
-
-// O(n)
-std::vector<int> Solution::MapISq(const std::vector<int> &in){
-  std::vector<int> output (in.size());
-  std::transform(in.begin(), in.end(), output.begin(), [](int i){return i*i;} );
-  return output;
-}
-
-// O(n)
-int Solution::AccumulateVect(const std::vector<int> &in){
-  int sum = std::accumulate(in.begin(), in.end(), 0);
-  return sum;
-
-}
-
-MaxHeap::MaxHeap(){
-
-}
-
-// O(1)
-int MaxHeap::GetParentIndex(int i){
-  if(i <= 0 || i >= data_.size()){
-    return INT_MAX;
-  }
-  else{
-    return (i-1)/2;
-  }
-
-}
-
-// O(1)
-int MaxHeap::GetLeftIndex(int i){
-  if ((2 * i) + 1 >= data_.size()) {
-    return INT_MAX;
-  }
-  else {
-    return (2 * i) + 1;
-  }
-
-}
-
-// O(1)
-int MaxHeap::GetRightIndex(int i){
-  if ((2 * i) + 2 >= data_.size()) {
-    return INT_MAX;
-  }
-  else{
-    return (2 * i) + 2;
-  }
-
-}
-
-// O(1)
-int MaxHeap::GetLargestChildIndex(int i){
-  
-  if(GetLeft(i) != INT_MAX && GetRight(i) != INT_MAX){
-    if (GetLeft(i) > GetRight(i)){
-      return  GetLeftIndex(i);
-    }
-    else {
-      return GetRightIndex(i);
-    }
-  }
-  else if(GetLeft(i) == INT_MAX && GetRight(i) != INT_MAX){
-    return GetRightIndex(i);
-  }
-  else if(GetLeft(i) != INT_MAX && GetRight(i) == INT_MAX){
-    return GetLeftIndex(i);
-  }
-  else if(GetLeft(i) == INT_MAX && GetRight(i) == INT_MAX){
-    return INT_MAX;
-  }
-}
-
-// O(1)
-int MaxHeap::GetLeft(int i){
-   if ((2 * i) + 1 >= data_.size()) {
-    return INT_MAX;
-  }
-  else {
-    return data_[(2 * i) + 1];
-  }
-}
-
-// O(1)
-int MaxHeap::GetRight(int i){
-  if ((2 * i) + 2 >= data_.size()) {
-    return INT_MAX;
-  }
-  else{
-    return data_[(2 * i) + 2];
-  }
-}
-
-// O(1)
-int MaxHeap::GetParent(int i){
-    if(i == 0){
-    return INT_MAX;
-  }
-  else{
-    return data_[(i-1)/2];
-  }
-}
-
-// O(1)
-int MaxHeap::top(){
-  if (data_.size() == 0) {
-    return INT_MAX;
-  } 
-  else {
-    return data_[0];
-  }
-}
-
-// O(logn)
-void MaxHeap::push(int v){
-  data_.push_back(v);
-  TrickleUp(data_.size() -1);
-}
-
-//O(logn)
-void MaxHeap::pop(){
-  if(top() != INT_MAX){
-  data_.erase(data_.begin());
-  TrickleDown(0);
-  }
-}
-
-//O(logn)
-void MaxHeap::TrickleUp(int i){
-  // Fix the min heap property if it is violated
-  while (i != 0 && GetParent(i) < data_[i]) {
-    std::swap(data_[i], data_[GetParentIndex(i)]);
-    i = GetParentIndex(i);
-  }
-}
-
-//O(logn)
-void MaxHeap::TrickleDown(int parent){
-  int left = GetLeftIndex(parent);
-  int right = GetRightIndex(parent);
-  if (left == data_.size()-1 && data_[parent] < data_[left]){
-    std::swap(data_[parent], data_[left]);
-    return;
-  }
-  if (right == data_.size()-1 && data_[parent] < data_[right]){
-    std::swap(data_[parent], data_[right]);
-    return;
-  }
-  if (data_[left] > data_[right] && data_[parent] < data_[left]){
-    std::swap(data_[parent],data_[left]);
-    TrickleDown(left);
-  }
-  else if(data_[parent] < data_[right]){
-    std::swap(data_[parent], data_[right]);
-    TrickleDown(right);
-  }
-
-}
-
 
 BST::BST(){
   root_ = nullptr;
@@ -338,6 +170,83 @@ void BST::PreOrder_Helper(TreeNode* a, std::vector<int>& result){
 }
 
 // O(1)
+void BST::InOrder_Recursive(std::vector<int>& result){
+  
+  InOrder_Recursive_Helper(root_, result);
+
+
+
+}
+
+// O(n)
+void BST::InOrder_Recursive_Helper(TreeNode* a, std::vector<int>& result){
+
+    if(a != nullptr){
+    InOrder_Recursive_Helper(a->left, result);
+    result.push_back(a->val);
+    InOrder_Recursive_Helper(a->right,result);
+    }
+}
+
+// O(n)
+void BST::InOrder_NonRecursive(std::vector<int>& result){
+  
+
+
+  // while current != null and stack not empty 
+  if(root_ != nullptr){
+  std::stack<TreeNode*> treeStack;
+  //treeStack.push(root_);
+  TreeNode* current = root_;
+
+  // do
+  // {
+  //   // traverse left and push to stack until left = null
+  //   while(current != nullptr){
+  //     treeStack.push(current);
+  //     current = current->left;
+  //   }
+  //   // add top to result vector and pop
+  //   result.push_back(treeStack.top()->val);
+  //   // push right from new top node and continue to push left until left = null
+  //   current = treeStack.top();
+  //   if(current->right != nullptr){
+  //     current = current->right;
+  //   }
+  //   else if(!treeStack.empty()){
+  //     treeStack.pop();
+  //     if(treeStack.empty() == true){
+  //       return;
+  //     }
+  //     current = treeStack.top();
+  //     result.push_back(current->val);
+  //     treeStack.pop();
+      
+  //     current = current->right;
+  //   }
+  // } while(current != nullptr || !treeStack.empty());
+
+
+  while(current != nullptr || !treeStack.empty()){
+    // traverse left and push to stack until left = null
+    while(current != nullptr){
+      treeStack.push(current);
+      current = current->left;
+    }
+   
+  //  add top to result vector and pop
+    current = treeStack.top();
+    treeStack.pop();
+    result.push_back(current->val);
+    // push right from new top node and continue to push left until left = null     
+    current = current->right;
+  }
+  }
+}
+
+
+
+// O(1)
 void BST::BFS(std::vector<int>& result){
   if(root_ != nullptr){
     std::queue<TreeNode*> children;
@@ -371,40 +280,36 @@ void BST::BFS_Helper(TreeNode* a, std::vector<int>& result, std::queue<TreeNode*
   
 }
 
-BST::~BST(){
-  PreOrderDelete(root_);
-}
-
-// Question 5:
-void Solution::heap_sort(std::vector<int>& input){
-  std::priority_queue <int, std::vector<int>, std::greater<int> > min_heap; 
-  for(const auto &it : input){
-    min_heap.push(it);
-  }
-  for(auto it = input.begin(); it < input.end(); it++){
-    *it = min_heap.top();
-    min_heap.pop();
-  }
-}
-
-// Question 6:
-
-int MaxHeap::KthLargest(std::vector<int>& input, int k){
-  std::make_heap(input.begin(), input.end());
-  int kth = 0;
-  for (const auto &it : input){
-    push(it);
-  }
-  if(k==1){
-    return top();
-  }
-  else if (k-1 > data_.size() || k-1 < 0){
-    return INT_MAX;
+int BST::Height(){
+  if (root_ == nullptr){
+    return 0;
   }
   else{
-    
-    return  data_[k-2] < data_[k-1]? data_[k-2] : data_[k-1];
+    return Height(root_) -1;
+  }
+}
+
+int BST::Height(TreeNode* current){
+  if (current == nullptr){
+    return 0;
+  }
+ 
+  // height = number of edges
+  // calculate the height at each node recursively
+  int leftHeight = Height(current->left) + 1; // +1 for the current edge
+  int rightHeight = Height(current->right) + 1;
+  
+  // return the largest height
+  if(leftHeight > rightHeight){
+    return leftHeight;
+  }
+  else{
+    return rightHeight;
+  }
 
   }
-  
+
+
+BST::~BST(){
+  PreOrderDelete(root_);
 }
