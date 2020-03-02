@@ -1,4 +1,4 @@
-# EE599 HW 5 - Sam Bruner
+# EE599 HW 6 - Sam Bruner
 
 > Can be used in Visual Studio Code
 
@@ -26,5 +26,3 @@ bazel test tests:tests
 ```
 
 ### Credits
-
-Implementation of Tree methods inspired by Prof Rob Edwards SDSU. https://www.youtube.com/channel/UC6Aa5t0vHN8uj_BCbgrRZcQ
