@@ -26,3 +26,4 @@ bazel test tests:tests
 ```
 
 ### Credits
+Reused BST code from HW 5 for question 6 implementation. Inserted the element at the desired index as the root of the BST. As a result, all of the elements to the left of the root in the vector will be less than it.
